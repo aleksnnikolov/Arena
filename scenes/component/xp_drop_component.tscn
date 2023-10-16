@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://bx5m6d5lyavx3"]
+
+[ext_resource type="Script" path="res://scenes/component/xp_drop_component.gd" id="1_kiuta"]
+[ext_resource type="PackedScene" uid="uid://bxdpjy8aoow7y" path="res://scenes/game_object/experience_drop/experience_drop.tscn" id="2_73qq3"]
+
+[node name="XPDropComponent" type="Node"]
+script = ExtResource("1_kiuta")
+drop_percent = null
+xp_drop_scene = ExtResource("2_73qq3")
