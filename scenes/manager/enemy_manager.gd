@@ -54,7 +54,6 @@ func on_difficulty_increased(difficulty: int):
 	var time_off = (0.1 / 12) * difficulty
 	time_off = min(time_off, 0.3)
 	timer.wait_time = base_spawn_time - time_off
-	print(timer.wait_time)
 	
 	if difficulty == 6:
 		enemy_table.add_item(wizard_enemy_scene, 20)
