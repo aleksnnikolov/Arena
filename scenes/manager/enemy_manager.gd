@@ -5,11 +5,14 @@ const SPAWN_RADIUS = 350
 
 @export var arena_time_manager: Node
 @export var rat_enemy_scene: PackedScene
+@export var wizard_enemy_scene: PackedScene
 @onready var timer: Timer = $Timer
 var player: Node2D
 var base_spawn_time: float 
+var enemy_table = WeightedTable.new()
 
 func _ready():
+	enemy_table.add_item(rat_enemy_scene, 10)
 	timer.timeout.connect(on_timer_timeout)
 	arena_time_manager.difficulty_increased.connect(on_difficulty_increased)
 	player = get_tree().get_first_node_in_group("player")
@@ -39,7 +42,8 @@ func get_spawn_position() -> Vector2:
 func on_timer_timeout():
 	timer.start()
 	
-	var enemy_instance = rat_enemy_scene.instantiate() as Node2D
+	var enemy_scene = enemy_table.pick_item()
+	var enemy_instance = enemy_scene.instantiate() as Node2D
 	
 	var entities_layer = get_tree().get_first_node_in_group("entities_layer")
 	entities_layer.add_child(enemy_instance)
@@ -51,3 +55,6 @@ func on_difficulty_increased(difficulty: int):
 	time_off = min(time_off, 0.3)
 	timer.wait_time = base_spawn_time - time_off
 	print(timer.wait_time)
+	
+	if difficulty == 6:
+		enemy_table.add_item(wizard_enemy_scene, 20)

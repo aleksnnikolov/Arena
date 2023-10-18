@@ -6,7 +6,7 @@ extends Node
 func _ready():
 	%Player.health_component.died.connect(on_player_died)
 	arena_time_manager.time_elapsed.connect(on_game_won)
-d
+
 
 func on_game_won():
 	var end_screen_instance = end_screen_scene.instantiate()

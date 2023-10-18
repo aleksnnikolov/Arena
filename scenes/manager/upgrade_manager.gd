@@ -37,8 +37,11 @@ func pick_upgrades():
 			break;
 			
 		var chosen_upgrade = filtered_upgrades.pick_random() as AbilityUpgrade
-		filtered_upgrades = filtered_upgrades.filter(func (upgrade): return upgrade.id != chosen_upgrade.id)
+		if chosen_upgrade == null:
+			return
+			
 		chosen_upgrades.append(chosen_upgrade)
+		filtered_upgrades = filtered_upgrades.filter(func (upgrade): return upgrade.id != chosen_upgrade.id)
 	
 	return chosen_upgrades
 
@@ -48,9 +51,8 @@ func on_upgrade_selected(upgrade: AbilityUpgrade):
 
 
 func on_level_up(new_level: int):
-	var chosen_upgrades = pick_upgrades() as Array[AbilityUpgrade]
-	
 	var upgrade_screen_instance = upgrade_screen_scene.instantiate()
 	add_child(upgrade_screen_instance)
+	var chosen_upgrades = pick_upgrades() as Array[AbilityUpgrade]
 	upgrade_screen_instance.set_ability_upgrades(chosen_upgrades)
 	upgrade_screen_instance.upgrade_selected.connect(on_upgrade_selected)
