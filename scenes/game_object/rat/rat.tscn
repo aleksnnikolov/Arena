@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bcgct6j3mjor2"]
+[gd_scene load_steps=16 format=3 uid="uid://bcgct6j3mjor2"]
 
 [ext_resource type="Script" path="res://scenes/game_object/rat/rat.gd" id="1_ccf1m"]
 [ext_resource type="Texture2D" uid="uid://bjhmmbb6ytfm3" path="res://scenes/game_object/rat/rat.png" id="1_qypod"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://d0vypathhwv2g" path="res://scenes/component/hurtbox_component.tscn" id="4_5eenb"]
 [ext_resource type="PackedScene" uid="uid://hsheswnfvuvf" path="res://scenes/component/death_component.tscn" id="4_w7qf1"]
 [ext_resource type="PackedScene" uid="uid://br2en4oy3emrk" path="res://scenes/component/velocity_component.tscn" id="5_u213h"]
+[ext_resource type="Shader" path="res://scenes/component/hitflash_component.gdshader" id="5_ymbak"]
+[ext_resource type="PackedScene" uid="uid://c7tfikbcdc5qy" path="res://scenes/component/hitflash_component.tscn" id="6_v55ym"]
 
 [sub_resource type="Animation" id="Animation_ljtmu"]
 length = 0.001
@@ -70,6 +72,11 @@ _data = {
 "walk": SubResource("Animation_q5sik")
 }
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mxque"]
+resource_local_to_scene = true
+shader = ExtResource("5_ymbak")
+shader_parameter/lerp_percent = 0.0
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_32oek"]
 radius = 11.0
 
@@ -93,6 +100,11 @@ libraries = {
 [node name="XPDropComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("3_5l2n4")]
 drop_percent = 0.35
 health_component = NodePath("../HealthComponent")
+
+[node name="HitflashComponent" parent="." node_paths=PackedStringArray("health_component", "sprite") instance=ExtResource("6_v55ym")]
+health_component = NodePath("../HealthComponent")
+sprite = NodePath("../Visuals/Sprite2D")
+hitflash_material = SubResource("ShaderMaterial_mxque")
 
 [node name="DeathComponent" parent="." node_paths=PackedStringArray("health_component", "sprite") instance=ExtResource("4_w7qf1")]
 health_component = NodePath("../HealthComponent")

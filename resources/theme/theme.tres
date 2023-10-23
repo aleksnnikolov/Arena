@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://bnqxpt2205a4i"]
+
+[ext_resource type="FontFile" uid="uid://ninw1xyxh0wm" path="res://resources/Rockboxcond12.ttf" id="1_qulpe"]
+
+[resource]
+default_font = ExtResource("1_qulpe")
+default_font_size = 16
