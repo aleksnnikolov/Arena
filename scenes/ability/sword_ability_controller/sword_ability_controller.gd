@@ -4,7 +4,8 @@ extends Node
 
 var base_wait_time: float
 
-var damage: float = 5
+var base_damage: float = 5
+var additional_damage_percent = 1
 const MAX_RANGE = 100
 
 # Called when the node enters the scene tree for the first time.
@@ -45,7 +46,7 @@ func on_timer_timeout():
 	var foreground_layer = get_tree().get_first_node_in_group("foreground_layer")
 	foreground_layer.add_child(sword_instance)
 	
-	sword_instance.hitbox_component.damage = damage
+	sword_instance.hitbox_component.damage = base_damage * additional_damage_percent
 	sword_instance.global_position = closest_enemy.global_position
 	sword_instance.global_position += Vector2.RIGHT.rotated(randf_range(0, TAU)) * 4
 	
@@ -54,15 +55,15 @@ func on_timer_timeout():
 
 
 func on_ability_upgrade_added(upgrade: AbilityUpgrade, current_upgrades: Dictionary):
-	if upgrade.id != "sword_rate":
-		return
-	
-	var reduction_stack = current_upgrades["sword_rate"]["quantity"]
-	var new_wait_time = base_wait_time
-	for n in range(reduction_stack, 0, -1):
-		new_wait_time = new_wait_time * (1 - 0.1)
-		
-	$Timer.wait_time = new_wait_time
-	$Timer.start()
+	if upgrade.id == "sword_rate":
+		var reduction_stack = current_upgrades["sword_rate"]["quantity"]
+		var new_wait_time = base_wait_time
+		for n in range(reduction_stack, 0, -1):
+			new_wait_time = new_wait_time * (1 - 0.1)
+			
+		$Timer.wait_time = new_wait_time
+		$Timer.start()
+	elif upgrade.id == "sword_damage":
+		additional_damage_percent = 1 + (current_upgrades["sword_damage"]["quantity"] * 0.15)
 
 

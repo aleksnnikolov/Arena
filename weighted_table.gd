@@ -9,11 +9,38 @@ func add_item(item, weight: int):
 	weight_sum += weight
 
 
-func pick_item():
-	var chosen_weight = randi_range(1, weight_sum)
-	var iteration_sum = 0
+func pick_item(exclude: Array = []):
+	var adjusted_items: Array[Dictionary] = exclude_items_from_table(exclude);
+	var adjusted_weight_sum = calculate_weight_sum(adjusted_items)
 	
-	for item in items:
+	var chosen_weight = randi_range(1, adjusted_weight_sum)
+	var iteration_sum = 0
+	for item in adjusted_items:
 		iteration_sum += item["weight"]
 		if chosen_weight <= iteration_sum:
 			return item["item"]
+
+
+func remove_item(item_to_remove):
+	items = items.filter(func(item): return item["item"] != item_to_remove)
+	weight_sum = calculate_weight_sum(items)
+
+
+func calculate_weight_sum(table):
+	var calcultated_weight_sum = 0
+	for item in table:
+		calcultated_weight_sum += item["weight"]
+		
+	return calcultated_weight_sum
+
+func exclude_items_from_table(exclude: Array):
+	var adjusted_items: Array[Dictionary] = items
+	if exclude.size() > 0:
+		adjusted_items = []
+		for item in items:
+			if item["item"] in exclude:
+				continue
+			else:
+				adjusted_items.append(item)
+				
+	return adjusted_items

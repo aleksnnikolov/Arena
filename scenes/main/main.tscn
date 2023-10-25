@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c4bmtc3v73arr"]
+[gd_scene load_steps=12 format=3 uid="uid://c4bmtc3v73arr"]
 
 [ext_resource type="PackedScene" uid="uid://crcdvstl0s1h0" path="res://scenes/game_object/player/player.tscn" id="1_6pcik"]
 [ext_resource type="TileSet" uid="uid://c084t6gihyg0y" path="res://resources/tileset.tres" id="1_7olnc"]
@@ -11,8 +11,6 @@
 [ext_resource type="PackedScene" uid="uid://c53c7yw7js1cv" path="res://scenes/UI/end_screen.tscn" id="4_6hc22"]
 [ext_resource type="PackedScene" uid="uid://d1sfqjays0rvf" path="res://scenes/UI/arena_time_ui.tscn" id="5_21myu"]
 [ext_resource type="PackedScene" uid="uid://yrfophu5lof0" path="res://scenes/manager/upgrade_manager.tscn" id="6_e43rg"]
-[ext_resource type="Resource" uid="uid://g6y6hd7qrn8o" path="res://resources/upgrades/sword_rate.tres" id="7_3rro3"]
-[ext_resource type="Resource" uid="uid://0svkmvxcuxxi" path="res://resources/upgrades/axe.tres" id="10_go5e0"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_ov3w8")
@@ -32,7 +30,6 @@ arena_time_manager = NodePath("../ArenaTimeManager")
 [node name="ExperienceManager" parent="." instance=ExtResource("4_0ixox")]
 
 [node name="UpgradeManager" parent="." node_paths=PackedStringArray("experience_manager") instance=ExtResource("6_e43rg")]
-upgrade_pool = Array[Resource("res://resources/upgrades/ability_upgrade.gd")]([ExtResource("7_3rro3"), ExtResource("10_go5e0")])
 experience_manager = NodePath("../ExperienceManager")
 
 [node name="GameCamera" parent="." instance=ExtResource("3_uacax")]
