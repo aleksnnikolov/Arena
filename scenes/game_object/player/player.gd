@@ -1,8 +1,6 @@
 extends CharacterBody2D
 
-const MAX_SPEED: int = 125
-const ACCELERATION_SMOOTHING: int = 25
-
+@onready var velocity_component = $VelocityComponent
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var damage_interval_timer = $DamageInterval
 @onready var health_bar: ProgressBar = $HealthBar
@@ -11,6 +9,7 @@ const ACCELERATION_SMOOTHING: int = 25
 @onready var visuals: Node2D = $Visuals
 
 var number_colliding_bodies:int = 0
+var base_speed = 0
 
 func _ready():
 	$CollisionArea2D.body_entered.connect(on_body_entered)
@@ -18,6 +17,7 @@ func _ready():
 	damage_interval_timer.timeout.connect(on_damage_interval_timer_timeout)
 	health_component.health_changed.connect(on_health_changed)
 	GameEvents.ability_upgrade_added.connect(on_ability_upgrade_added)
+	base_speed = velocity_component.max_speed
 	update_health_display()
 
 
@@ -25,10 +25,8 @@ func _process(delta):
 	var movement_vector = get_movement_vector()
 	var direction = movement_vector.normalized()
 	
-	var target_velocity = direction * MAX_SPEED
-	velocity = velocity.lerp(target_velocity, 1 - exp(-delta * ACCELERATION_SMOOTHING))
-	
-	move_and_slide()
+	velocity_component.accelerate_in_direction(direction)
+	velocity_component.move(self)
 	
 	if movement_vector.x != 0 || movement_vector.y != 0:
 		animation_player.play("walk")
@@ -73,12 +71,15 @@ func on_damage_interval_timer_timeout():
 
 
 func on_health_changed():
+	GameEvents.emit_player_damaged()
 	update_health_display()
 
 
 func on_ability_upgrade_added(ability_upgrade: AbilityUpgrade, current_upgrades: Dictionary):
-	if !ability_upgrade is Ability:
+	if ability_upgrade is Ability:
+		var ability = ability_upgrade as Ability
+		abilities.add_child(ability.ability_controller_scene.instantiate())
+	elif ability_upgrade.id == "player_speed":
+		velocity_component.max_speed = base_speed + (base_speed * current_upgrades["player_speed"]["quantity"] * 0.1)
+	else:
 		return
-	
-	var ability = ability_upgrade as Ability
-	abilities.add_child(ability.ability_controller_scene.instantiate())
