@@ -19,11 +19,20 @@ func _ready():
 func set_victory():
 	%TitleLabel.text = "VICTORY"
 	%DescLabel.text = "You Won!"
-
+	play_jingle(false)
+	
 
 func set_defeat():
 	%TitleLabel.text = "DEFEAT"
 	%DescLabel.text = "You Died!"
+	play_jingle(true)
+
+
+func play_jingle(defeat: bool):
+	if defeat:
+		$DefeatStreamPlayer.play()
+	else:
+		$VictoryStreamPlayer.play()
 
 
 func on_restart_pressed():
