@@ -16,7 +16,7 @@ func _ready():
 	resume_button.pressed.connect(on_resume_pressed)
 	options_button.pressed.connect(on_options_pressed)
 	quit_button.pressed.connect(on_quit_pressed)
-	$AnimationPlayer.play("default")
+	$AnimationPlayer.play("Default")
 	
 	var tween = create_tween()
 	tween.tween_property(panel_container, "scale", Vector2.ZERO, 0)
@@ -35,7 +35,7 @@ func close():
 		return 
 	is_closing = true
 	
-	$AnimationPlayer.play_backwards("default")
+	$AnimationPlayer.play_backwards("Default")
 	
 	var tween = create_tween()
 	tween.tween_property(panel_container, "scale", Vector2.ONE, 0)
@@ -53,6 +53,8 @@ func on_resume_pressed():
 
 
 func on_options_pressed():
+	ScreenTransition.transition()
+	await ScreenTransition.transitioned_halfway
 	var options_menu_instance = options_menu_scene.instantiate()
 	add_child(options_menu_instance)
 	options_menu_instance.back_pressed.connect(on_options_back_pressed.bind(options_menu_instance))
