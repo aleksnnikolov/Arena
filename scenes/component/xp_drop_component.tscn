@@ -5,5 +5,4 @@
 
 [node name="XPDropComponent" type="Node"]
 script = ExtResource("1_kiuta")
-drop_percent = null
 xp_drop_scene = ExtResource("2_73qq3")
