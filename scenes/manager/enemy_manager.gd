@@ -4,8 +4,11 @@ const SPAWN_RADIUS = 350
 
 
 @export var arena_time_manager: Node
+
 @export var rat_enemy_scene: PackedScene
 @export var wizard_enemy_scene: PackedScene
+@export var bat_enemy_scene: PackedScene
+
 @onready var timer: Timer = $Timer
 var player: Node2D
 var base_spawn_time: float 
@@ -57,4 +60,6 @@ func on_difficulty_increased(difficulty: int):
 	timer.wait_time = base_spawn_time - time_off
 	
 	if difficulty == 6:
-		enemy_table.add_item(wizard_enemy_scene, 20)
+		enemy_table.add_item(bat_enemy_scene, 8)
+	if difficulty == 12:
+		enemy_table.add_item(wizard_enemy_scene, 15)
