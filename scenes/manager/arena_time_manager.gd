@@ -6,6 +6,7 @@ signal time_elapsed
 signal difficulty_increased(difficulty: int)
 
 @onready var timer: Timer = $Timer
+
 var difficulty: int = 0
 
 func _ready():
