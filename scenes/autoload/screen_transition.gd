@@ -12,15 +12,14 @@ func transition_to_scene(scene_path: String):
 
 
 func transition():
+	$ColorRect.visible = true
+	
 	$AnimationPlayer.play("transition")
-	await transitioned_halfway
-	skip_emit = true
-	$AnimationPlayer.play_backwards("transition")
-
-
-func emit_transitioned_halfway():
-	if skip_emit:
-		skip_emit = false
-		return
+	await $AnimationPlayer.animation_finished
 	
 	transitioned_halfway.emit()
+	
+	$AnimationPlayer.play_backwards("transition")
+	await $AnimationPlayer.animation_finished
+	
+	$ColorRect.visible = false

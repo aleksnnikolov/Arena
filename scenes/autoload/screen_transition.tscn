@@ -33,7 +33,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_wwpvh"]
 resource_name = "transition"
-length = 0.5
+length = 0.4
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -46,27 +46,13 @@ tracks/0/keys = {
 "update": 0,
 "values": [0.0, 1.0]
 }
-tracks/1/type = "method"
+tracks/1/type = "value"
 tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".")
+tracks/1/enabled = false
+tracks/1/path = NodePath("ColorRect:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.4),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"emit_transitioned_halfway"
-}]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("ColorRect:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.01),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
